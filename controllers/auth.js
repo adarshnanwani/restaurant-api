@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const crypto = require('crypto');
 const asyncHandler = require('../middleware/async');
+const ErrorResponse = require('../utils/errorResponse');
 
 //@desc     Register User
 //@route    POST api/v1/auth/register
@@ -13,6 +14,37 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     password
   });
 
+  sendTokenResponse(user, 200, res);
+});
+
+//@desc     Login user
+//@route    POST api/v1/auth/login
+//@access   Public
+exports.loginUser = asyncHandler(async (req, res, next) => {
+  const { username, password } = req.body;
+
+  // Check if email and password are submitted
+  if (!username || !password) {
+    return next(
+      new ErrorResponse('Please enter both username and password', 400)
+    );
+  }
+
+  // Check if user exists
+  const user = await User.findOne({ username }).select('+password');
+  if (!user) {
+    return next(new ErrorResponse('Invalid credentials', 401));
+  }
+
+  console.log('USER', user);
+
+  // Check if password matches
+  const passwordMatches = await user.comparePassword(password);
+  if (!passwordMatches) {
+    return next(new ErrorResponse('Invalid credentials', 401));
+  }
+
+  // If everything goes well
   sendTokenResponse(user, 200, res);
 });
 
