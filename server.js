@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
 
 // Load env vars
@@ -30,7 +31,11 @@ app.use(cors());
 // Mount routers
 app.use('/api/v1/auth', auth);
 
+// Mount custom errorHandler middleware
+app.use(errorHandler);
+
 const port = process.env.PORT || 5000;
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}!`);
 });
