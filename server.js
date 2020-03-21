@@ -12,6 +12,7 @@ dotenv.config({
 connectDB();
 
 // Load route files
+const auth = require('./routes/api/auth');
 
 // Initialize app
 const app = express();
@@ -27,6 +28,7 @@ app.use(cors());
 /* Apply middleware ENDS*/
 
 // Mount routers
+app.use('/api/v1/auth', auth);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
