@@ -1,6 +1,10 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
 
@@ -18,7 +22,7 @@ const auth = require('./routes/api/auth');
 // Initialize app
 const app = express();
 
-/* Apply middleware */
+/* Apply 3rd-party middleware */
 
 // Enable body-parser(for POST requests)
 app.use(express.json());
@@ -26,7 +30,19 @@ app.use(express.json());
 // Enable cors
 app.use(cors());
 
-/* Apply middleware ENDS*/
+// Prevent http param pollution
+app.use(hpp());
+
+// Sanitize data
+app.use(mongoSanitize());
+
+// Set security headers
+app.use(helmet());
+
+// Prevent XSS attacks
+app.use(xss());
+
+/* Apply 3rd-party middleware ENDS*/
 
 // Mount routers
 app.use('/api/v1/auth', auth);
