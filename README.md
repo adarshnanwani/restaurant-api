@@ -1,6 +1,6 @@
-## Express Quickstart
+# Express Quickstart
 
-### How to run
+## How to run
 
 - Clone/download this repo
 - Change `config/config.config.env` to `config/config.env`
