@@ -7,10 +7,11 @@ const ErrorResponse = require('../utils/errorResponse');
 //@route    POST api/v1/auth/register
 //@access   Public
 exports.registerUser = asyncHandler(async (req, res, next) => {
-  const { username, password } = req.body;
+  const { name, email, password } = req.body;
 
   const user = await User.create({
-    username,
+    name,
+    email,
     password
   });
 
@@ -21,17 +22,15 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 //@route    POST api/v1/auth/login
 //@access   Public
 exports.loginUser = asyncHandler(async (req, res, next) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   // Check if email and password are submitted
-  if (!username || !password) {
-    return next(
-      new ErrorResponse('Please enter both username and password', 400)
-    );
+  if (!email || !password) {
+    return next(new ErrorResponse('Please enter both email and password', 400));
   }
 
   // Check if user exists
-  const user = await User.findOne({ username }).select('+password');
+  const user = await User.findOne({ email }).select('+password');
   if (!user) {
     return next(new ErrorResponse('Invalid credentials', 401));
   }
