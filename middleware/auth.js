@@ -12,7 +12,11 @@ exports.protect = asyncHandler(async (req, res, next) => {
   ) {
     // set token from auth header
     token = req.headers.authorization.split(' ')[1];
-  } else if (req.cookies.token) {
+  } else if (
+    process.env.USE_COOKIE &&
+    process.env.USE_COOKIE.toLowerCase() === 'true' &&
+    req.cookies.token
+  ) {
     // Set token from cookie
     token = req.cookies.token;
   }
