@@ -143,7 +143,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   }
 
   // Check current password
-  if (!(await user.matchPassword(req.body.currentPassword))) {
+  if (!(await user.comparePassword(req.body.currentPassword))) {
     return next(new ErrorResponse(`Password is incorrect.`, 401));
   }
 
