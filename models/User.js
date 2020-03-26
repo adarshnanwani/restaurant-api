@@ -5,11 +5,11 @@ const crypto = require('crypto');
 
 const UserSchema = new mongoose.Schema(
   {
-    name: {
+    userName: {
       type: String,
-      required: [true, 'Please enter the name']
+      required: [true, 'Please enter the username']
     },
-    email: {
+    userEmail: {
       type: String,
       required: [true, 'Please enter an email'],
       unique: true,
@@ -18,11 +18,36 @@ const UserSchema = new mongoose.Schema(
         'Please add a valid email'
       ]
     },
-    password: {
+    userPassword: {
       type: String,
-      required: [true, 'Please add a password'],
+      required: [true, 'Please enter a password'],
       minlength: 6,
       select: false
+    },
+    isRestaurant: {
+      type: Boolean,
+      required: true
+    },
+    userGender: {
+      type: String,
+      enum: ['Male', 'Female']
+    },
+    userAge: {
+      type: Number
+    },
+    userCity: {
+      type: String,
+      required: [true, 'Please enter a city'],
+    },
+    userCountry: {
+      type: String,
+      required: [true, 'Please enter a country'],
+    },
+    userProfileImageUrl: {
+      type: String
+    },
+    typeOfFood: {
+      type: [String]
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date
@@ -40,7 +65,7 @@ UserSchema.pre('save', async function(next) {
   }
 
   const salt = await bcryptjs.genSalt(10);
-  this.password = await bcryptjs.hash(this.password, salt);
+  this.userPassword = await bcryptjs.hash(this.userPassword, salt);
   next();
 });
 
@@ -59,7 +84,7 @@ UserSchema.methods.getSignedJwtToken = function() {
 
 // Match user entered password to hashed password in database
 UserSchema.methods.comparePassword = async function(enteredPassword) {
-  return await bcryptjs.compare(enteredPassword, this.password);
+  return await bcryptjs.compare(enteredPassword, this.userPassword);
 };
 
 // Generate and hash password token

@@ -8,13 +8,39 @@ const sendEmail = require('../utils/sendEmail');
 //@route    POST api/v1/auth/register
 //@access   Public
 exports.registerUser = asyncHandler(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const {
+    userName,
+    userEmail,
+    userPassword,
+    isRestaurant,
+    userGender,
+    userAge,
+    userCity,
+    userCountry,
+    userProfileImageUrl,
+    typeOfFood
+  } = req.body;
 
-  const user = await User.create({
-    name,
-    email,
-    password
+  const user = new User({
+    userName,
+    userEmail,
+    userPassword,
+    isRestaurant,
+    userCity,
+    userCountry,
+    userProfileImageUrl
   });
+  if (typeOfFood) {
+    user.typeOfFood = typeOfFood;
+  }
+  if (userGender) {
+    user.userGender = userGender;
+  }
+  if (userAge) {
+    user.userAge = userAge;
+  }
+
+  await user.save();
 
   sendTokenResponse(user, 200, res);
 });
