@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const mongoSanitize = require('express-mongo-sanitize');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const hpp = require('hpp');
@@ -29,6 +31,14 @@ app.use(express.json());
 
 // Enable cors
 app.use(cors());
+
+// Cookie parser
+app.use(cookieParser());
+
+// Logger middleware for dev environment
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 // Prevent http param pollution
 app.use(hpp());
