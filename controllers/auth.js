@@ -49,23 +49,21 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 //@route    POST api/v1/auth/login
 //@access   Public
 exports.loginUser = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { userEmail, userPassword } = req.body;
 
   // Check if email and password are submitted
-  if (!email || !password) {
+  if (!userEmail || !userPassword) {
     return next(new ErrorResponse('Please enter both email and password', 400));
   }
 
   // Check if user exists
-  const user = await User.findOne({ email }).select('+password');
+  const user = await User.findOne({ userEmail }).select('+userPassword');
   if (!user) {
     return next(new ErrorResponse('Invalid credentials', 401));
   }
 
-  console.log('USER', user);
-
   // Check if password matches
-  const passwordMatches = await user.comparePassword(password);
+  const passwordMatches = await user.comparePassword(userPassword);
   if (!passwordMatches) {
     return next(new ErrorResponse('Invalid credentials', 401));
   }

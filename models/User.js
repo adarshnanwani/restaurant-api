@@ -37,11 +37,11 @@ const UserSchema = new mongoose.Schema(
     },
     userCity: {
       type: String,
-      required: [true, 'Please enter a city'],
+      required: [true, 'Please enter a city']
     },
     userCountry: {
       type: String,
-      required: [true, 'Please enter a country'],
+      required: [true, 'Please enter a country']
     },
     userProfileImageUrl: {
       type: String
@@ -60,7 +60,7 @@ const UserSchema = new mongoose.Schema(
 // Hash the user password
 UserSchema.pre('save', async function(next) {
   // Skip if the password isn't modified(new user/change password)
-  if (!this.isModified('password')) {
+  if (!this.isModified('userPassword')) {
     next();
   }
 
