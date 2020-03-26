@@ -21,6 +21,7 @@ connectDB();
 // Load route files
 const auth = require('./routes/api/auth');
 const menuitems = require('./routes/api/menuItems');
+const orders = require('./routes/api/orders');
 
 // Initialize app
 const app = express();
@@ -58,6 +59,7 @@ app.use(xss());
 // Mount routes
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/menuitems', menuitems);
+app.use('/api/v1/orders', orders);
 
 // Mount custom errorHandler middleware
 app.use(errorHandler);
