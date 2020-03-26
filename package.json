@@ -1,7 +1,7 @@
 {
-  "name": "express-quickstart",
+  "name": "express-starter-kit",
   "version": "1.0.0",
-  "description": "",
+  "description": "Express app with basic security middleware and token based user authentication.",
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node server",
@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "Adarsh Nanwani",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
