@@ -19,3 +19,45 @@ exports.addMenuItem = asyncHandler(async (req, res, next) => {
 
   res.status(201).json({ success: true, data: menuItem });
 });
+
+//@desc     Delete a menuitem
+//@route    DELETE /api/v1/menuitems/:menuItemId
+//@access   Private (only for restaurant users)
+exports.deleteMenuItem = asyncHandler(async (req, res, next) => {
+  // Check if the user is a restaurant
+  if (!req.user.isRestaurant) {
+    return next(
+      new ErrorResponse('User not authorized to delete a menu item', 401)
+    );
+  }
+
+  // Check if the menu item exists
+  const menuItem = await MenuItem.findById(req.params.menuItemId);
+
+  if (!menuItem) {
+    return next(
+      new ErrorResponse(
+        `No menu item found with id ${req.params.menuItemId}`,
+        404
+      )
+    );
+  }
+
+  // Check if the menu item belongs to this user
+  if (menuItem.user.toString() !== req.user.id) {
+    return next(
+      new ErrorResponse(
+        `No menu item found with id ${req.params.menuItemId}`,
+        404
+      )
+    );
+  }
+
+  // If everything goes well, then remove the menu item
+  await menuItem.remove();
+
+  res.status(200).json({
+    success: true,
+    data: {}
+  });
+});
