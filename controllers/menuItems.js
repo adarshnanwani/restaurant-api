@@ -2,7 +2,7 @@ const MenuItem = require('../models/MenuItem');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 
-//@desc     Add a menuitem
+//@desc     Add a menu item
 //@route    POST /api/v1/menuitems
 //@access   Private (only for restaurant users)
 exports.addMenuItem = asyncHandler(async (req, res, next) => {
@@ -20,7 +20,7 @@ exports.addMenuItem = asyncHandler(async (req, res, next) => {
   res.status(201).json({ success: true, data: menuItem });
 });
 
-//@desc     Delete a menuitem
+//@desc     Delete a menu item
 //@route    DELETE /api/v1/menuitems/:menuItemId
 //@access   Private (only for restaurant users)
 exports.deleteMenuItem = asyncHandler(async (req, res, next) => {
@@ -60,4 +60,18 @@ exports.deleteMenuItem = asyncHandler(async (req, res, next) => {
     success: true,
     data: {}
   });
+});
+
+//@desc     Get all menu items for a restaurant user
+//@route    GET /api/v1/menuitems
+//@access   Private (only for restaurant users)
+exports.getAllMenuItems = asyncHandler(async (req, res, next) => {
+  // Check if the user is a restaurant
+  if (!req.user.isRestaurant) {
+    return next(new ErrorResponse('Unauthorized access', 401));
+  }
+
+  const menuItems = await MenuItem.find({ user: req.user.id });
+
+  res.status(200).json({ success: true, data: menuItems });
 });
