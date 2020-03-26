@@ -20,6 +20,7 @@ connectDB();
 
 // Load route files
 const auth = require('./routes/api/auth');
+const menuitems = require('./routes/api/menuItems');
 
 // Initialize app
 const app = express();
@@ -54,8 +55,9 @@ app.use(xss());
 
 /* Apply 3rd-party middleware ENDS*/
 
-// Mount routers
+// Mount routes
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/menuitems', menuitems);
 
 // Mount custom errorHandler middleware
 app.use(errorHandler);
