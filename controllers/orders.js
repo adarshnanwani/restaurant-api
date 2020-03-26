@@ -2,6 +2,26 @@ const Order = require('../models/Order');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 
+//@desc     Get all orders for a restaurant
+//@route    GET /api/v1/orders
+//@access   Private (Only a customer user can create an order)
+exports.getAllOrders = asyncHandler(async (req, res, next) => {
+  let query;
+  if (req.user.isRestaurant) {
+    query = {
+      restaurant: req.user.id
+    };
+  } else {
+    query = {
+      user: req.user.id
+    };
+  }
+
+  const orders = await Order.find(query);
+
+  res.status(200).json({ success: true, data: orders });
+});
+
 //@desc     Create a new order
 //@route    POST /api/v1/orders/:restaurantId
 //@access   Private (Only a customer user can create an order)
