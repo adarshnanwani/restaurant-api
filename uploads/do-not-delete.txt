@@ -1,0 +1,2 @@
+This file is there to keep this folder around.
+This folder is user be fileStorage util function to temporarily store files.
