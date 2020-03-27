@@ -22,6 +22,7 @@ connectDB();
 const auth = require('./routes/api/auth');
 const menuitems = require('./routes/api/menuItems');
 const orders = require('./routes/api/orders');
+const restaurants = require('./routes/api/restaurants');
 
 // Initialize app
 const app = express();
@@ -60,6 +61,7 @@ app.use(xss());
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/menuitems', menuitems);
 app.use('/api/v1/orders', orders);
+app.use('/api/v1/restaurants', restaurants);
 
 // Mount custom errorHandler middleware
 app.use(errorHandler);
