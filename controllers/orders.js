@@ -19,11 +19,18 @@ exports.getAllOrders = asyncHandler(async (req, res, next) => {
   }
 
   const orders = await Order.find(query)
-    .populate('restaurant')
-    .populate('user')
+    .populate({
+      path: 'restaurant',
+      select: 'typeOfFood userName userCity userCountry userProfileImageUrl'
+    })
+    .populate({
+      path: 'user',
+      select: 'userName userEmail userCity userCountry userProfileImageUrl'
+    })
     .populate({
       path: 'itemList',
-      model: MenuItem
+      model: MenuItem,
+      select: 'chooseItemType itemImageUrl itemIngredients itemPrice itemTitle'
     });
 
   res.status(200).json({ success: true, data: orders });
