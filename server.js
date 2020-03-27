@@ -9,6 +9,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
+const { initCloudinary } = require('./config/fileStorage');
 
 // Load env vars
 dotenv.config({
@@ -23,6 +24,7 @@ const auth = require('./routes/api/auth');
 const menuitems = require('./routes/api/menuItems');
 const orders = require('./routes/api/orders');
 const restaurants = require('./routes/api/restaurants');
+const images = require('./routes/api/images');
 
 // Initialize app
 const app = express();
@@ -31,6 +33,8 @@ const app = express();
 
 // Enable body-parser(for POST requests)
 app.use(express.json());
+
+initCloudinary();
 
 // Enable cors
 app.use(cors());
@@ -62,6 +66,7 @@ app.use('/api/v1/auth', auth);
 app.use('/api/v1/menuitems', menuitems);
 app.use('/api/v1/orders', orders);
 app.use('/api/v1/restaurants', restaurants);
+app.use('/api/v1/images', images);
 
 // Mount custom errorHandler middleware
 app.use(errorHandler);
