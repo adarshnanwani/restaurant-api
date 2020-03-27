@@ -1,4 +1,5 @@
 const Order = require('../models/Order');
+const MenuItem = require('../models/MenuItem');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 
@@ -17,7 +18,13 @@ exports.getAllOrders = asyncHandler(async (req, res, next) => {
     };
   }
 
-  const orders = await Order.find(query);
+  const orders = await Order.find(query)
+    .populate('restaurant')
+    .populate('user')
+    .populate({
+      path: 'itemList',
+      model: MenuItem
+    });
 
   res.status(200).json({ success: true, data: orders });
 });
