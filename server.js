@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+var swaggerUi = require('swagger-ui-express');
+var swaggerJSDoc = require('swagger-jsdoc');
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
 const { initCloudinary } = require('./config/fileStorage');
@@ -34,6 +36,21 @@ const app = express();
 // Enable body-parser(for POST requests)
 app.use(express.json());
 
+// Swagger
+var options = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Restaurant App', // Title (required)
+      version: '1.0.0' // Version (required)
+    }
+  },
+  apis: ['./models/*.js', './routes/api/*.js'] // Path to the API docs
+};
+var swaggerSpec = swaggerJSDoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Initialize Cloudinary
 initCloudinary();
 
 // Enable cors
