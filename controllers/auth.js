@@ -85,9 +85,14 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/users
 // @access    Private
 exports.updateDetails = asyncHandler(async (req, res, next) => {
+  const { name, email } = req.body;
+
+  if (!name && !email) {
+    next(new ErrorResponse('Please enter either email or name or both', 400));
+  }
   const fieldsToUpdate = {
-    name: req.body.name,
-    email: req.body.email
+    userName: name ? name : req.user.userName,
+    userEmail: email ? email : req.user.userEmail
   };
 
   const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
@@ -177,7 +182,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 //@route    PUT api/v1/auth/changepassword
 //@access   Private
 exports.updatePassword = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id).select('+password');
+  const user = await User.findById(req.user.id).select('+userPassword');
 
   // Check if user exists
   if (!user) {
@@ -191,7 +196,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Password is incorrect.`, 401));
   }
 
-  user.password = req.body.newPassword;
+  user.userPassword = req.body.newPassword;
 
   await user.save();
 
