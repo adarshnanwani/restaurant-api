@@ -3,6 +3,63 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
+/**
+ * @swagger
+ *  components:
+ *    securitySchemes:
+ *      bearerAuth:
+ *        type: http
+ *        scheme: bearer
+ *        bearerFormat: JWT
+ *    schemas:
+ *      User:
+ *        type: object
+ *        required:
+ *          - userName
+ *          - userEmail
+ *          - userPassword
+ *          - isRestaurant
+ *          - userCity
+ *          - userCountry
+ *        properties:
+ *          userName:
+ *            type: string
+ *          userEmail:
+ *            type: string
+ *            format: email
+ *            description: Email for the user, needs to be unique.
+ *          userPassword:
+ *            type: string
+ *            description: Password for the user, needs to be min 6 characters.
+ *          isRestaurant:
+ *            type: boolean
+ *            description: Should be true for restaurant-type user and false for normal users.
+ *          userGender:
+ *            type: string
+ *            description: Must either be 'Male' or 'Female'
+ *          userAge:
+ *            type: number
+ *          userCity:
+ *            type: string
+ *          userCountry:
+ *            type: string
+ *          userProfileImageUrl:
+ *            type: string
+ *            description: Should be a url pointing to an image
+ *          typeOfFood:
+ *            type: [string]
+ *            description: Array of strings, should only be sent for restaurant users, ignored for normal users
+ *        example:
+ *          userName: John Doe
+ *          userEmail: john@gmail.com
+ *          userPassword: 123456
+ *          isRestaurant: false
+ *          userGender: Male
+ *          userAge: 22
+ *          userCity: Bangalore
+ *          userCountry: India
+ *          userProfileImageUrl: https://example.com/photo.jpg
+ */
 const UserSchema = new mongoose.Schema(
   {
     userName: {
