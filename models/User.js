@@ -61,6 +61,246 @@ const crypto = require('crypto');
  *          userCity: Bangalore
  *          userCountry: India
  *          userProfileImageUrl: https://example.com/photo.jpg
+ *      CustomerUser:
+ *        type: object
+ *        required:
+ *          - userName
+ *          - userEmail
+ *          - userPassword
+ *          - isRestaurant
+ *          - userCity
+ *          - userCountry
+ *        properties:
+ *          userName:
+ *            type: string
+ *          userEmail:
+ *            type: string
+ *            format: email
+ *            description: Email for the user, needs to be unique.
+ *          userPassword:
+ *            type: string
+ *            description: Password for the user, needs to be min 6 characters.
+ *          isRestaurant:
+ *            type: boolean
+ *            description: Should be true for restaurant-type user and false for normal users.
+ *          userGender:
+ *            type: string
+ *            description: Must either be 'Male' or 'Female'
+ *          userAge:
+ *            type: number
+ *          userCity:
+ *            type: string
+ *          userCountry:
+ *            type: string
+ *          userProfileImageUrl:
+ *            type: string
+ *            description: Should be a url pointing to an image
+ *        example:
+ *          userName: John Doe
+ *          userEmail: john@gmail.com
+ *          userPassword: 123456
+ *          isRestaurant: false
+ *          userGender: Male
+ *          userAge: 22
+ *          userCity: Bangalore
+ *          userCountry: India
+ *          userProfileImageUrl: https://example.com/photo.jpg
+ *      CustomerUserResponse:
+ *        type: object
+ *        properties:
+ *          success:
+ *            type: boolean
+ *            example: true
+ *          data:
+ *            type: object
+ *            properties:
+ *              _id:
+ *                type: string
+ *                description: Object id of the user
+ *                example: 5e7c8dc3b6b7422700ef056a
+ *              userName:
+ *                type: string
+ *                example: John Doe
+ *              userEmail:
+ *                type: string
+ *                format: email
+ *                description: Email for the user, needs to be unique.
+ *                example: john@gmail.com
+ *              isRestaurant:
+ *                type: boolean
+ *                description: Should be true for restaurant-type user and false for normal users.
+ *                example: false
+ *              userGender:
+ *                type: string
+ *                description: Must either be 'Male' or 'Female'
+ *                example: Male
+ *              userAge:
+ *                type: number
+ *                example: 22
+ *              userCity:
+ *                type: string
+ *                example: Bangalore
+ *              userCountry:
+ *                type: string
+ *                example: India
+ *              userProfileImageUrl:
+ *                type: string
+ *                description: Should be a url pointing to an image
+ *                example: https://example.com/photo.jpg
+ *      CustomerUserResponseData:
+ *        type: object
+ *        properties:
+ *          _id:
+ *            type: string
+ *            description: Object id of the user
+ *            example: 5e7c8dc3b6b7422700ef056a
+ *          userName:
+ *            type: string
+ *            example: John Doe
+ *          userEmail:
+ *            type: string
+ *            format: email
+ *            description: Email for the user, needs to be unique.
+ *            example: john@gmail.com
+ *          isRestaurant:
+ *            type: boolean
+ *            description: Should be true for restaurant-type user and false for normal users.
+ *            example: false
+ *          userGender:
+ *            type: string
+ *            description: Must either be 'Male' or 'Female'
+ *            example: Male
+ *          userAge:
+ *            type: number
+ *            example: 22
+ *          userCity:
+ *            type: string
+ *            example: Bangalore
+ *          userCountry:
+ *            type: string
+ *            example: India
+ *          userProfileImageUrl:
+ *            type: string
+ *            description: Should be a url pointing to an image
+ *            example: https://example.com/photo.jpg
+ *      RestaurantUser:
+ *        type: object
+ *        required:
+ *          - userName
+ *          - userEmail
+ *          - userPassword
+ *          - isRestaurant
+ *          - userCity
+ *          - userCountry
+ *        properties:
+ *          userName:
+ *            type: string
+ *            example: Biryani Zone
+ *          userEmail:
+ *            type: string
+ *            format: email
+ *            description: Email for the user, needs to be unique.
+ *            example: biryani.zone@gmail.com
+ *          userPassword:
+ *            type: string
+ *            description: Password for the user, needs to be min 6 characters.
+ *            example: 123456
+ *          isRestaurant:
+ *            type: boolean
+ *            description: Should be true for restaurant-type user and false for normal users.
+ *            example: true
+ *          userCity:
+ *            type: string
+ *            example: Bangalore
+ *          userCountry:
+ *            type: string
+ *            example: India
+ *          userProfileImageUrl:
+ *            type: string
+ *            description: Should be a url pointing to an image
+ *            example: https://example.com/photo.jpg
+ *          typeOfFood:
+ *            type: array
+ *            example: ['Chinese', 'South Indian']
+ *            items:
+ *              type: string
+ *              description: Array of strings, should only be sent for restaurant users, ignored for normal users
+ *      RestaurantUserResponse:
+ *        type: object
+ *        properties:
+ *          success:
+ *            type: boolean
+ *            example: true
+ *          data:
+ *            type: object
+ *            properties:
+ *              _id:
+ *                type: string
+ *                description: Object id of the user
+ *                example: 5e7c8dc3b6b7422700ef056a
+ *              userName:
+ *                type: string
+ *              example: Biryani Zone
+ *              userEmail:
+ *                type: string
+ *                format: email
+ *                description: Email for the user, needs to be unique.
+ *                example: biryani.zone@gmail.com
+ *              isRestaurant:
+ *                type: boolean
+ *                description: Should be true for restaurant-type user and false for normal users.
+ *                example: true
+ *              userCity:
+ *                type: string
+ *                example: Bangalore
+ *              userCountry:
+ *                type: string
+ *                example: India
+ *              userProfileImageUrl:
+ *                type: string
+ *                description: Should be a url pointing to an image
+ *                example: https://example.com/photo.jpg
+ *              typeOfFood:
+ *                type: array
+ *                example: ['Chinese', 'South Indian']
+ *                items:
+ *                  type: string
+ *                  description: Array of strings, should only be sent for restaurant users, ignored for normal users
+ *      RestaurantUserResponseData:
+ *        type: object
+ *        properties:
+ *          _id:
+ *            type: string
+ *            description: Object id of the user
+ *            example: 5e7c8dc3b6b7422700ef056a
+ *          userName:
+ *            type: string
+ *          example: Biryani Zone
+ *          userEmail:
+ *            type: string
+ *            format: email
+ *            description: Email for the user, needs to be unique.
+ *            example: biryani.zone@gmail.com
+ *          isRestaurant:
+ *            type: boolean
+ *            description: Should be true for restaurant-type user and false for normal users.
+ *            example: true
+ *          userCity:
+ *            type: string
+ *            example: Bangalore
+ *          userCountry:
+ *            type: string
+ *            example: India
+ *          userProfileImageUrl:
+ *            type: string
+ *            description: Should be a url pointing to an image
+ *            example: https://example.com/photo.jpg
+ *          typeOfFood:
+ *            type: array
+ *            example: ['Chinese', 'South Indian']
+ *            items:
+ *              type: string
+ *              description: Array of strings, should only be sent for restaurant users, ignored for normal users
  */
 const UserSchema = new mongoose.Schema(
   {
