@@ -6,13 +6,19 @@ module.exports = async (req, control, folderPath) => {
   const upload = multerInstance.single(control);
   return new Promise((resolve, reject) => {
     upload(req, null, async function(err) {
-      if (err) {
-        reject(err);
+      // Check if file is found
+      if (!req.file) {
+        reject('No image found');
+        return;
       }
-
+      // Check if file is jpg or png only
+      if (!imageMimeTypes.includes(req.file.mimetype)) {
+        reject('Incorrect mimetype');
+        return;
+      }
       const path = req.file.path;
       const uniqueFilename = new Date().toISOString();
-
+      console.log(uniqueFilename);
       try {
         const imageData = await uploadToCloudinary(
           path,
@@ -29,11 +35,13 @@ module.exports = async (req, control, folderPath) => {
   });
 };
 
+const imageMimeTypes = ['image/jpeg', 'image/png'];
+
 function uploadToCloudinary(path, folderPath, uniqueFilename) {
   return new Promise((resolve, reject) => {
     cloudinary.v2.uploader.upload(
       path,
-      { public_id: `${folderPath}/${uniqueFilename}`, tags: `blog` },
+      { public_id: `${folderPath}/${uniqueFilename}` },
       function(err, image) {
         if (err) return reject(err);
         return resolve(image);
