@@ -44,9 +44,9 @@ const {
  *                        items:
  *                          $ref: '#/components/schemas/MenuItem'
  *                      user:
- *                        $ref: '#/components/schemas/User'
+ *                        $ref: '#/components/schemas/CustomerUserResponse'
  *                      restaurant:
- *                        $ref: '#/components/schemas/User'
+ *                        $ref: '#/components/schemas/RestaurantUserResponse'
  *        "401":
  *          description: Unauthorized access
  *          content:
@@ -125,9 +125,9 @@ router.route('/').get(protect, getAllOrders);
  *                        items:
  *                          $ref: '#/components/schemas/MenuItem'
  *                      restaurant:
- *                        $ref: '#/components/schemas/User'
+ *                        $ref: '#/components/schemas/RestaurantUserResponseData'
  *                      user:
- *                        $ref: '#/components/schemas/User'
+ *                        $ref: '#/components/schemas/CustomerUserResponseData'
  *        "400":
  *          description: Bad Request
  *          content:
@@ -231,9 +231,9 @@ router.route('/:restaurantId').post(protect, createOrder);
  *                        items:
  *                          $ref: '#/components/schemas/MenuItem'
  *                      restaurant:
- *                        $ref: '#/components/schemas/User'
+ *                        $ref: '#/components/schemas/RestaurantUserResponseData'
  *                      user:
- *                        $ref: '#/components/schemas/User'
+ *                        $ref: '#/components/schemas/CustomerUserResponseData'
  *        "400":
  *          description: Bad Request
  *          content:
