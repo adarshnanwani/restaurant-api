@@ -32,9 +32,11 @@ const {
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/User'
+ *              oneOf:
+ *                - $ref: '#/components/schemas/CustomerUser'
+ *                - $ref: '#/components/schemas/RestaurantUser'
  *            examples:
- *              User:
+ *              Customer User:
  *                value:
  *                  userName: John Doe
  *                  userEmail: john@gmail.com
@@ -45,7 +47,7 @@ const {
  *                  userCity: Bangalore
  *                  userCountry: India
  *                  userProfileImageUrl: https://example.com/photo.jpg
- *              Restaurant:
+ *              Restaurant User:
  *                value:
  *                  userName: Biryani Zone
  *                  userEmail: biryani.zone@gmail.com
@@ -187,15 +189,35 @@ router.route('/logout').get(protect, logout);
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  success:
- *                    type: boolean
- *                    description: true when request is successful, otherwise false.
- *                  data:
- *                    schema:
- *                    $ref: '#/components/schemas/User'
- *
+ *                oneOf:
+ *                  - $ref: '#/components/schemas/CustomerUserResponse'
+ *                  - $ref: '#/components/schemas/RestaurantUserResponse'
+ *              examples:
+ *                Customer User Response:
+ *                  value:
+ *                    success: true
+ *                    data:
+ *                      _id: 5e7c8dc3b6b7422700ef056a
+ *                      userName: John Doe
+ *                      userEmail: john@gmail.com
+ *                      isRestaurant: false
+ *                      userGender: Male
+ *                      userAge: 22
+ *                      userCity: Bangalore
+ *                      userCountry: India
+ *                      userProfileImageUrl: https://example.com/photo.jpg
+ *                Restaurant User Response:
+ *                  value:
+ *                    success: true
+ *                    data:
+ *                      _id: 5e7c8dc3b6b7422700ef056a
+ *                      userName: Biryani Zone
+ *                      userEmail: biryani.zone@gmail.com
+ *                      isRestaurant: true
+ *                      userCity: Bangalore
+ *                      userCountry: India
+ *                      userProfileImageUrl: https://example.com/photo.jpg
+ *                      typeOfFood: ['North Indian', 'Chinese', 'Biryani']
  *        "401":
  *          description: Unauthorized access
  *          content:
@@ -412,23 +434,35 @@ router.route('/changepassword').put(protect, updatePassword);
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  success:
- *                    type: boolean
- *                    description: true when request is successful, false otherwise.
- *                  data:
- *                    $ref: '#/components/schemas/User'
- *                    example:
- *                      userName: John Does
- *                      userEmail: john@gmail.coms
- *                      userPassword: 123456e
- *                      isRestaurant: false34
- *                      userGender: Male4
- *                      userAge: 224
+ *                oneOf:
+ *                  - $ref: '#/components/schemas/CustomerUserResponse'
+ *                  - $ref: '#/components/schemas/RestaurantUserResponse'
+ *              examples:
+ *                Customer User Response:
+ *                  value:
+ *                    success: true
+ *                    data:
+ *                      _id: 5e7c8dc3b6b7422700ef056a
+ *                      userName: John Doe
+ *                      userEmail: john@gmail.com
+ *                      isRestaurant: false
+ *                      userGender: Male
+ *                      userAge: 22
  *                      userCity: Bangalore
  *                      userCountry: India
  *                      userProfileImageUrl: https://example.com/photo.jpg
+ *                Restaurant User Response:
+ *                  value:
+ *                    success: true
+ *                    data:
+ *                      _id: 5e7c8dc3b6b7422700ef056a
+ *                      userName: Biryani Zone
+ *                      userEmail: biryani.zone@gmail.com
+ *                      isRestaurant: true
+ *                      userCity: Bangalore
+ *                      userCountry: India
+ *                      userProfileImageUrl: https://example.com/photo.jpg
+ *                      typeOfFood: ['North Indian', 'Chinese', 'Biryani']
  *        "400":
  *          description: Bad Request - Send either name or email or both
  *          content:
