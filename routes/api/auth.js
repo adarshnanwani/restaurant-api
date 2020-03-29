@@ -273,6 +273,12 @@ router.route('/forgotpassword').post(forgotPassword);
  *      consumes:
  *        - application/json
  *      parameters:
+ *        - in: path
+ *          name: resetToken
+ *          schema:
+ *            type: string
+ *          required: true
+ *          description: Reset token sent via email to the user
  *        - in: body
  *          schema:
  *            type: object
@@ -281,6 +287,7 @@ router.route('/forgotpassword').post(forgotPassword);
  *            properties:
  *              password:
  *                type: string
+ *                description: New password to be set
  *            example:
  *              password: 123456
  *      responses:
@@ -307,21 +314,9 @@ router.route('/forgotpassword').post(forgotPassword);
  *                  success:
  *                    type: boolean
  *                    description: true when request is successful, otherwise false.
- *                  data:
+ *                  error:
  *                    type: string
  *                    description: error message
- *        "500":
- *          description: Server error
- *          content:
- *            application/json:
- *              schema:
- *                type: object
- *                properties:
- *                  success:
- *                    type: boolean
- *                    description: true when request is successful, otherwise false.
- *                  data:
- *                    type: string
  */
 router.route('/resetpassword/:resetToken').put(resetPassword);
 
