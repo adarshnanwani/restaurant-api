@@ -47,8 +47,10 @@ const crypto = require('crypto');
  *            type: string
  *            description: Should be a url pointing to an image
  *          typeOfFood:
- *            type: [string]
- *            description: Array of strings, should only be sent for restaurant users, ignored for normal users
+ *            type: array
+ *            items:
+ *              type: string
+ *              description: Array of strings, should only be sent for restaurant users, ignored for normal users
  *        example:
  *          userName: John Doe
  *          userEmail: john@gmail.com
