@@ -54,7 +54,7 @@ const crypto = require('crypto');
  *        example:
  *          userName: John Doe
  *          userEmail: john@gmail.com
- *          userPassword: 123456
+ *          userPassword: "123456"
  *          isRestaurant: false
  *          userGender: Male
  *          userAge: 22
@@ -98,7 +98,7 @@ const crypto = require('crypto');
  *        example:
  *          userName: John Doe
  *          userEmail: john@gmail.com
- *          userPassword: 123456
+ *          userPassword: "123456"
  *          isRestaurant: false
  *          userGender: Male
  *          userAge: 22

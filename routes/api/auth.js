@@ -40,7 +40,7 @@ const {
  *                value:
  *                  userName: John Doe
  *                  userEmail: john@gmail.com
- *                  userPassword: 123456
+ *                  userPassword: "123456"
  *                  isRestaurant: false
  *                  userGender: Male
  *                  userAge: 22
@@ -51,7 +51,7 @@ const {
  *                value:
  *                  userName: Biryani Zone
  *                  userEmail: biryani.zone@gmail.com
- *                  userPassword: 123456
+ *                  userPassword: "123456"
  *                  isRestaurant: true
  *                  userCity: Bangalore
  *                  userCountry: India
@@ -115,7 +115,7 @@ router.route('/register').post(registerUser);
  *                  description: User's password
  *              example:
  *                userEmail: john@gmail.com
- *                userPassword: 123456
+ *                userPassword: "123456"
  *      responses:
  *        "200":
  *          description: Successful Login
