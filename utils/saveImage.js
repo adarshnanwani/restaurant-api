@@ -18,7 +18,7 @@ module.exports = async (req, control, folderPath) => {
       }
       const path = req.file.path;
       const uniqueFilename = new Date().toISOString();
-      console.log(uniqueFilename);
+
       try {
         const imageData = await uploadToCloudinary(
           path,
