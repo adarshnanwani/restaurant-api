@@ -77,7 +77,7 @@ router.route('/').get(protect, getAllOrders);
  *        - bearerAuth: []
  *      parameters:
  *        - in: path
- *          name: menuItemId
+ *          name: restaurantId
  *          schema:
  *            type: string
  *          required: true
@@ -96,7 +96,8 @@ router.route('/').get(protect, getAllOrders);
  *              itemList:
  *                type: array
  *                items:
- *                  $ref: '#/components/schemas/MenuItem'
+ *                  type: string
+ *                  example: 5e7c8dc3b6b7422700ef056a
  *      responses:
  *        "200":
  *          description: Order added successfully

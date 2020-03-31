@@ -325,7 +325,7 @@ const UserSchema = new mongoose.Schema(
     },
     isRestaurant: {
       type: Boolean,
-      required: true
+      required: [true, 'Please send isRestaurant']
     },
     userGender: {
       type: String,
