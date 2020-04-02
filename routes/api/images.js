@@ -9,8 +9,6 @@ const { uploadImage } = require('../../controllers/images');
  *  /api/v1/images:
  *    post:
  *      summary: Uploads an image and returns remote url
- *      security:
- *        - bearerAuth: []
  *      tags: [Images]
  *      consumes:
  *        - multipart/form-data:
@@ -79,23 +77,7 @@ const { uploadImage } = require('../../controllers/images');
  *                  value:
  *                    success: false
  *                    error: Please only add a .jpg or .png image file
- *        "401":
- *          description: Unauthorized access
- *          content:
- *            application/json:
- *              schema:
- *                type: object
- *                properties:
- *                  success:
- *                    type: boolean
- *                    description: true when request is successful, otherwise false.
- *                  error:
- *                    type: string
- *                    description: Contains the description of the error
- *                example:
- *                  success: false
- *                  error: Unauthorized access
  */
-router.route('/').post(protect, uploadImage);
+router.route('/').post(uploadImage);
 
 module.exports = router;
