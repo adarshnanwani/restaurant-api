@@ -4,7 +4,8 @@ const { protect } = require('../../middleware/auth');
 const {
   addMenuItem,
   deleteMenuItem,
-  getAllMenuItems
+  getAllMenuItems,
+  getMenuItemsForRestaurant
 } = require('../../controllers/menuItems');
 
 /**
@@ -155,7 +156,7 @@ router
  *                  success: false
  *                  error: No menu items found for this restaurant
  *  */
-router.route('/:restaurantId').get(deleteMenuItem);
+router.route('/:restaurantId').get(getMenuItemsForRestaurant);
 
 /**
  * @swagger
