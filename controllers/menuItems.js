@@ -75,3 +75,18 @@ exports.getAllMenuItems = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, data: menuItems });
 });
+
+//@desc     Get all menu items for a restaurant user
+//@route    GET /api/v1/menuitems/:restaurantId
+//@access   Public
+exports.getMenuItemsForRestaurant = asyncHandler(async (req, res, next) => {
+  const menuItems = await MenuItem.find({ user: req.params.restaurantId });
+
+  if (!menuItems) {
+    return next(
+      new ErrorResponse('No menu items found for this restaurant', 404)
+    );
+  }
+
+  res.status(200).json({ success: true, data: menuItems });
+});

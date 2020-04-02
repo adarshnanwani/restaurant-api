@@ -197,4 +197,54 @@ router
  */
 router.route('/:menuItemId').delete(protect, deleteMenuItem);
 
+/**
+ * @swagger
+ * paths:
+ *  /api/v1/{restaurantId}:
+ *    get:
+ *      summary: Public method to get all menu items for a restaurant user
+ *      tags: [MenuItems]
+ *      parameters:
+ *        - in: path
+ *          name: restaurantId
+ *          schema:
+ *            type: string
+ *          required: true
+ *          description: ObjectId of the restaurant
+ *      responses:
+ *        "200":
+ *          description: Success message
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  success:
+ *                    type: boolean
+ *                    description: true when request is successful, otherwise false.
+ *                  data:
+ *                    schema:
+ *                    type: array
+ *                    items:
+ *                      $ref: '#/components/schemas/MenuItem'
+ *
+ *        "404":
+ *          description: Restaurant doesn't exist
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  success:
+ *                    type: boolean
+ *                    description: true when request is successful, otherwise false.
+ *                  error:
+ *                    type: string
+ *                    description: Contains the description of the error
+ *                example:
+ *                  success: false
+ *                  error: No menu items found for this restaurant
+ *  */
+router.route('/:restaurantId').get(deleteMenuItem);
+
 module.exports = router;
