@@ -87,7 +87,7 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 exports.updateDetails = asyncHandler(async (req, res, next) => {
   const { name, email } = req.body;
 
-  if (!name && !email) {
+  if (!name || !email) {
     next(new ErrorResponse('Please enter either email or name or both', 400));
   }
   const fieldsToUpdate = {
@@ -110,7 +110,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 //@route    POST api/v1/auth/forgotpassword
 //@access   Public
 exports.forgotPassword = asyncHandler(async (req, res, next) => {
-  const user = await User.findOne({ email: req.body.email });
+  const user = await User.findOne({ userEmail: req.body.email });
 
   if (!user) {
     return next(new ErrorResponse('There is no user with that email', 404));
